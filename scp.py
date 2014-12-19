@@ -41,7 +41,7 @@ class SftpClient():
                 logging.critical(details)
 
     def __filelist(self, folder):
-        """Gets file's list
+        """Gets files list
 
         :param string folder:
         :return list:
