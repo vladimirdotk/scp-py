@@ -20,9 +20,10 @@ class SftpClient():
         self.password = password
         self.logfile = logfile
         self.logs = logs
+        self.debug = debug
 
     def __logging(self, message, details=None, critical=True):
-        """ Logs errors and info messages
+        """ Logging errors and info messages
 
         :param string message:
         :param string details:
@@ -30,9 +31,13 @@ class SftpClient():
         """
         if self.logs:
             import logging
+            if self.debug:
+                log_level = logging.DEBUG
+            else:
+                log_level = logging.INFO
             logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s',
                                 datefmt='%Y-%m-%d %H:%M:%S',
-                                level=logging.DEBUG, filename=self.logfile)
+                                level=log_level, filename=self.logfile)
             if critical:
                 logging.critical(message)
             else:
@@ -41,7 +46,7 @@ class SftpClient():
                 logging.critical(details)
 
     def __filelist(self, folder):
-        """Gets files list
+        """Getting files list
 
         :param string folder:
         :return list:
@@ -92,10 +97,10 @@ class SftpClient():
             client.put(local_path, remote_path)
             self.__logging('Copied '+local_path, critical=False)
         except Exception as e:
-            self.__logging('Failed to copy file!', e)
+            self.__logging('Failed to copy '+local_path, e)
 
     def __pathcorrector(self, path):
-        """Checks and corrects path if needed
+        """Checks and corrects path for self needs
 
         :param string path:
         :return string:

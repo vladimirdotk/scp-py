@@ -11,5 +11,8 @@ password = 'secret'
 local_dir = '/home/scp-py/folder/'
 remote_dir = '/home/example.com/folder/'
 
+# Other options:
+# port=22, logs=True, debug=True, logfile='scp.log'
+
 client = SftpClient(host, username, password, local_dir, remote_dir)
 client.copy()
