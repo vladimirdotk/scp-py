@@ -12,7 +12,8 @@ class SftpClient():
 
     """ Client for copying files """
 
-    def __init__(self, host, user, password, local_dir, remote_dir, port=22, logs=True, debug=True, logfile='scp.log',):
+    def __init__(self, host, user, password, local_dir, remote_dir,
+                 port=22, logs=True, debug=False, logfile='scp.log',):
         self.host = host
         self.local_dir = local_dir
         self.remote_dir = remote_dir
