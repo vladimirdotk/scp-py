@@ -5,6 +5,7 @@
 
 import os
 import paramiko
+import sys
 
 
 class SftpClient():
@@ -56,7 +57,7 @@ class SftpClient():
             if dirlist:
                 return dirlist
             else:
-                self.__logging('Seems like folder is empty!')
+                self.__logging('Seems like folder '+folder+' is empty! Nothing to copy.')
                 return None
         except Exception as e:
             self.__logging('Failed to get file\'s list!', e)
@@ -114,13 +115,19 @@ class SftpClient():
         """Copies files from local folder to remote"""
         local_folder = self.__pathcorrector(self.local_dir)
         remote_folder = self.__pathcorrector(self.remote_dir)
-        files_list = os.listdir(local_folder)
+        files_list = self.__filelist(local_folder)
         if files_list:
             transport = self.__connection()
-            if transport:
-                sftp = self.__client(transport)
-                if sftp:
-                    for item in files_list:
-                        self.__put(sftp, local_folder+item, remote_folder+item)
-                    sftp.close()
-                    transport.close()
+        else:
+            sys.exit('Listing fles error')
+        if transport:
+            sftp = self.__client(transport)
+        else:
+            sys.exit('Connection error')
+        if sftp:
+            for item in files_list:
+                self.__put(sftp, local_folder+item, remote_folder+item)
+            sftp.close()
+            transport.close()
+        else:
+            sys.exit('SFTP client error')
