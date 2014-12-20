@@ -23,7 +23,7 @@ class SftpClient():
         self.debug = debug
 
     def __logging(self, message, details=None, critical=True):
-        """ Logging errors and info messages
+        """ Logs errors and info messages
 
         :param string message:
         :param string details:
@@ -46,7 +46,7 @@ class SftpClient():
                 logging.critical(details)
 
     def __filelist(self, folder):
-        """Getting files list
+        """Gets files list
 
         :param string folder:
         :return list:
